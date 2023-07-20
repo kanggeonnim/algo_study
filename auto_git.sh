@@ -2,6 +2,7 @@
 
 REMOTE_REPO="$(git remote)"
 COMMIT_MESSAGE=day$(date "+%m%d")
+DIR_NAME=${PWD##*/}
 
 repo_array=(${REMOTE_REPO// /})
 for repo in "${repo_array[@]}"
@@ -23,7 +24,7 @@ do
 done
 
 if [ $? = 0 ]; then
-  echo "> workspace push done."
+  echo "> ${DIR_NAME} push done."
 else
   git reset --soft HEAD^
   read -s -n 1 -p "> push faild. please check the git error message.Press any key to EXIT . . ."
