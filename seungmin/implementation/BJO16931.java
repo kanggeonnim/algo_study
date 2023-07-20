@@ -27,25 +27,19 @@ public class BJO16931 {
 		}
 		
 		for(int i = 0; i < n; i++) {
-			int sum = 0;
-			int std = 0;
-			for (int j = 0; j < m; j++) {
-				sum += Math.abs(std - arr[i][j]);
-				std = arr[i][j];
+			int line = arr[i][0] + arr[i][m-1];
+			for (int j = 0; j < m-1; j++) {
+				line += Math.abs(arr[i][j] - arr[i][j+1]);
 			}
-			sum += std;
-			side += sum;
+			side += line;
 		}
 		
 		for(int i = 0; i < m; i++) {
-			int sum = 0;
-			int std = 0;
-			for (int j = 0; j < n; j++) {
-				sum += Math.abs(std - arr[j][i]);
-				std = arr[j][i];
+			int line = arr[0][i] +arr[n-1][i];
+			for (int j = 0; j < n-1; j++) {
+				line += Math.abs(arr[j][i] - arr[j+1][i]);
 			}
-			sum += std;
-			front += sum;
+			front += line;
 		}
 		
 		System.out.print(front + side + under);
