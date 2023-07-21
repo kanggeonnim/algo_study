@@ -1,7 +1,7 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=알고리즘&fontSize=90" />
 
-# 🎈스터디 규칙
-* 월, 화, 수, 목에 문제 출제
+# 🚩스터디 규칙
+>* 월, 화, 수, 목에 문제 출제
 * 화, 수, 목, 금 점심시간에 두명씩 발표
 * 오후 8:30분에 남은 두명이 비대면으로 발표
 * 문제를 다 못풀더라도 이해한 부분까지 설명 준비하기
