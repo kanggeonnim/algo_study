@@ -29,5 +29,5 @@
 
 ## 🗓️일정표
 ## 1주차: Math
->- 월: 11653 화: 6603 수: 2981 목: 1016
->- bonus: 1028
+>- 월: [11653](https://www.acmicpc.net/problem/11653) 화: [6603](https://www.acmicpc.net/problem/6603) 수: [2981](https://www.acmicpc.net/problem/2981) 목: [1016](https://www.acmicpc.net/problem/1016)
+>- bonus: [1028](https://www.acmicpc.net/problem/1028)
