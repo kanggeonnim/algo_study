@@ -29,5 +29,5 @@
 
 ## 🗓️일정표
 ## 1주차: Math
->- 월: [11653](https://www.acmicpc.net/problem/11653) 화: [6603](https://www.acmicpc.net/problem/6603) 수: [2981](https://www.acmicpc.net/problem/2981) 목: [1016](https://www.acmicpc.net/problem/1016)
->- bonus: [1028](https://www.acmicpc.net/problem/1028)
+>- 월: [B1) 11653번: 소인수분해](https://www.acmicpc.net/problem/11653) 화: [S2) 6603번: 로또](https://www.acmicpc.net/problem/6603) 수: [G4) 2981번: 검문](https://www.acmicpc.net/problem/2981) 목: [G1) 1016번: 제곱 ㄴㄴ수](https://www.acmicpc.net/problem/1016)
+>- bonus: [P5) 1028번: 다이아몬드 광산](https://www.acmicpc.net/problem/1028)
