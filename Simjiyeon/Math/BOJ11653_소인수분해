@@ -1,0 +1,42 @@
+package test04;
+
+import java.util.Scanner;
+
+public class Test {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        
+        int i=2;
+        if( n ==1) {
+            System.out.println(n);
+        }else {
+            while(true) {//먼저 2부터 n까지 숫자를 키우면서 나누어 본다. 만약 나누어 지지 않는다면 증가시켜서 다음 소수를 찾아 나누어본다.
+                //다음 소수를 찾는다.            
+                for(int j=2;j*j<=i;j++) {
+                    if(i%j==0) {
+                        i++;
+                        break;
+                    }
+                }
+                //시간 초과가 나는 코드
+                /*for(int j=2;j*j<=i;j++) {
+                *    if(i%j==0) {
+                *        break;
+                *    }
+                *}
+                */
+                
+                
+                if(n%i==0) {
+                    System.out.print(i+"\n");
+                    n=n/i;
+                }else {//만약 i로 나누어지지 않는다면 i값을 증가시켜 다음 소수를 찾는다.
+                    i++;
+                }
+                if(i>n) break;
+            }
+        }
+        
+    }
+}
