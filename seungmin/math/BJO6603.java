@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class BJO6603 {
 	static StringBuilder sb = new StringBuilder();
 	static int[] arr;
-	static boolean[] visited;
+	static int[] answer = new int[6];
 	static int n;
 	
 	public static void main(String[] args) throws IOException{
@@ -29,8 +29,6 @@ public class BJO6603 {
 				arr[i] = Integer.parseInt(st.nextToken());
 			}
 			
-			visited = new boolean[n];
-			Arrays.sort(arr);
 			combination(0, 0);
 			sb.append("\n");
 		}
@@ -40,19 +38,16 @@ public class BJO6603 {
 	
 	static void combination(int start, int cnt) {
 		if(cnt == 6) {
-			for(int i = 0; i < n; i++) {
-				if(visited[i]) {
-					sb.append(arr[i]).append(" ");
-				}
+			for(int i = 0; i < 6; i++) {
+				sb.append(answer[i]).append(" ");
 			}
 			sb.append("\n");
 			return;
 		}
 		
 		for(int i = start; i < n - (5 - cnt); i++) {
-			visited[i] = true;
+			answer[cnt] = arr[i];
 			combination(i + 1, cnt + 1);
-			visited[i] = false;
 		}
 	}
 }
