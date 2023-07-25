@@ -8,6 +8,7 @@ public class boj1153_Factorization {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
 		boolean check = false;
+		
 		if (n == 1) {
 			return;
 		} else {
@@ -15,7 +16,7 @@ public class boj1153_Factorization {
 
 				check = false;
 
-				for (int i = 2; i <= n / 2; i++) {
+				for (int i = 2; i <= (int)Math.pow(n, 0.5); i++) {
 
 					if (n % i == 0) {
 						System.out.println(i);
