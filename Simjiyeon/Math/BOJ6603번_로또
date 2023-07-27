@@ -24,6 +24,7 @@ public class bj6603 {
             
             int[] check = new int[13];
             Permut(0, 0,res,arr,check);
+            System.out.println();
            
             
             
