@@ -5,29 +5,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class bj6603 {
-    //뒷 부분 재귀함수
-	//r: 현재 선택완료된 인덱스의 수
-    private static void Permut(int n, int r, LinkedList<Integer> perArr,  int[] arr,int[] check) {
-    	 if (r == 6) {
-             for (int i : perArr) {
-                 System.out.print(i + " ");
-             }
-             System.out.println();
-             return;
-         }
-         for (int i = r; i < n; i++) {
-        	 if(check[i]==0) {
-        		 perArr.add(arr[i]); //값을 넣는 부분
-        		 check[i]=1;
-                 Permut(n, r+1, perArr, arr,check);
-                 check[i]=0;
-                 //System.out.println("call permut");
-                 perArr.removeLast();
-        	 }
-        	
-         }
-        
-    }
+
     
     
     public static void main(String[] args) throws IOException {
@@ -42,13 +20,38 @@ public class bj6603 {
             }
             //입력 끝
             
-            LinkedList<Integer> Parr = new LinkedList<>();
+            int[] res = new int[6];
+            
             int[] check = new int[13];
-            Permut(n, 0,Parr,arr,check);
+            Permut(0, 0,res,arr,check);
            
             
             
         }//while(k!=0)
         
     }//main
+    
+	//r: 현재 선택완료된 인덱스의 수
+    private static void Permut(int n, int r, int[] res,  int[] arr,int[] check) {
+    	 if (r == 6) {
+             for (int i : res) {
+                 System.out.print(i + " ");
+             }
+             System.out.println();
+             return;
+         }
+         for (int i = n; i < arr.length; i++) {
+        	 if(check[i]==0) {
+        		 res[r]=arr[i];
+        		 check[i]=1;
+                 Permut(i+1, r+1, res, arr,check);
+                 check[i]=0;
+        	 }
+        	
+         }
+        
+    }//Permut
+    
+    
+    
 }
