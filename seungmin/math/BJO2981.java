@@ -23,7 +23,7 @@ public class BJO2981 {
 			GCD = gcd(GCD, arr[i] - arr[i-1]);
 		}
 		
-		for(int i = 2; i <= Math.sqrt(GCD); i++) {
+		for(int i = 2; i <= GCD/2; i++) {
 			if(GCD%i==0) System.out.print(i+" ");
 		}
 		System.out.print(GCD + " ");
