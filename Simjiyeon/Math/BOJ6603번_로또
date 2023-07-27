@@ -1,0 +1,54 @@
+package Test;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class bj6603 {
+    //뒷 부분 재귀함수
+	//r: 현재 선택완료된 인덱스의 수
+    private static void Permut(int n, int r, LinkedList<Integer> perArr,  int[] arr,int[] check) {
+    	 if (r == 6) {
+             for (int i : perArr) {
+                 System.out.print(i + " ");
+             }
+             System.out.println();
+             return;
+         }
+         for (int i = r; i < n; i++) {
+        	 if(check[i]==0) {
+        		 perArr.add(arr[i]); //값을 넣는 부분
+        		 check[i]=1;
+                 Permut(n, r+1, perArr, arr,check);
+                 check[i]=0;
+                 //System.out.println("call permut");
+                 perArr.removeLast();
+        	 }
+        	
+         }
+        
+    }
+    
+    
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int k=1;
+        while(k!=0) {//만약 k가 0을 입력 받으면 프로그램 종료
+            k = sc.nextInt();
+            int[] arr = new int[k];
+            int n = arr.length;
+            for(int i=0;i<k;i++) {
+                arr[i]=sc.nextInt();
+            }
+            //입력 끝
+            
+            LinkedList<Integer> Parr = new LinkedList<>();
+            int[] check = new int[13];
+            Permut(n, 0,Parr,arr,check);
+           
+            
+            
+        }//while(k!=0)
+        
+    }//main
+}
