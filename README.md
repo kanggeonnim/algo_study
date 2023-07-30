@@ -28,7 +28,17 @@
 
 
 ## 🗓️일정표
+###### [참고 자료](https://dev-dain.tistory.com/155)
 ## 1주차: Math
->- 월: [B1) 11653번: 소인수분해](https://www.acmicpc.net/problem/11653) 화: [S2) 6603번: 로또](https://www.acmicpc.net/problem/6603) 수: [G4) 2981번: 검문](https://www.acmicpc.net/problem/2981) 목: [G1) 1016번: 제곱 ㄴㄴ수](https://www.acmicpc.net/problem/1016)
->- bonus: [P5) 1028번: 다이아몬드 광산](https://www.acmicpc.net/problem/1028)
->- 참고 자료: https://dev-dain.tistory.com/155
+>- 월: [B1) 11653번: 소인수분해](https://www.acmicpc.net/problem/11653)
+>- 화: [S2) 6603번: 로또](https://www.acmicpc.net/problem/6603)
+>- 수: [G4) 2981번: 검문](https://www.acmicpc.net/problem/2981)
+>- 목: [G1) 1016번: 제곱 ㄴㄴ수](https://www.acmicpc.net/problem/1016)
+>- 금: [P5) 1028번: 다이아몬드 광산](https://www.acmicpc.net/problem/1028)
+
+## 2주차: Data Structures
+>- 월: [S4) 3986번: 좋은 단어](https://www.acmicpc.net/problem/3986)
+>- 화: [S3) 1270번: 전쟁 - 땅따먹기](https://www.acmicpc.net/problem/1270)
+>- 수: [S2) 1927번: 최소힙](https://www.acmicpc.net/problem/1927)
+>- 목: [G5) 22234번: 가희와 은행](https://www.acmicpc.net/problem/22234)
+>- 금: [G4) 21939번: 문제  추천 시스템 Version 1](https://www.acmicpc.net/problem/21939)
