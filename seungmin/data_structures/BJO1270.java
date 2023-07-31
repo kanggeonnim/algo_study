@@ -42,11 +42,6 @@ public class BJO1270 {
 			
 			if (temp.get().getValue() > sum / 2) System.out.println(temp.get().getKey());
 			else System.out.println("SYJKGW");
-			
-			
 		}
-		
-		
-		
 	}
 }
