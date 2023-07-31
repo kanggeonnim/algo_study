@@ -22,9 +22,9 @@ public class BJO3986 {
 				if (!stack.isEmpty() && stack.peek() == c) stack.pop();
 				else stack.push(c);
 			}
-			if(stack.isEmpty()) cnt += 1;
+			if(stack.isEmpty()) cnt++;
 		}
 		
-		System.out.println(cnt);
+		System.out.print(cnt);
 	}
 }
