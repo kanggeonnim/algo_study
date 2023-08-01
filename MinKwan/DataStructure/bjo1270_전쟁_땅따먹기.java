@@ -1,5 +1,3 @@
-package algo;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class bjo1270_전쟁_땅따먹기 {
+public class Main {
 
 	/*
 	 * 주어지는 병사의 번호가 엄청 커서 배열에 숫자를 늘려가는 방식으로 찾는건 불가능하다.
@@ -25,7 +23,7 @@ public class bjo1270_전쟁_땅따먹기 {
 		int n = Integer.parseInt(br.readLine());
 
 		// 특정 주둔 군대 번호가 절반을 초과하면 그 땅을 지배 중
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			// 지역에 주둔 중인 군대
 			int armyNum = Integer.parseInt(st.nextToken());
@@ -58,9 +56,7 @@ public class bjo1270_전쟁_땅따먹기 {
 
 			}
 
-			double ratio = ((double)max / armyNum) * 100;
-			//System.out.println(ratio);
-			if (ratio > 50.0) {
+			if (max > armyNum/2) {
 				System.out.println(maxIdx);
 			} else {
 				System.out.println("SYJKGW");
