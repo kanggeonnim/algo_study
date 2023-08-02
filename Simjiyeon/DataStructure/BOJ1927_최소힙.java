@@ -1,4 +1,4 @@
-package day0801;
+package day0802;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +16,7 @@ public class boj1927 {
 		int n = Integer.parseInt(st.nextToken());
 		heap = new ArrayList<Long>();
 		heap.add((long) 0);//이 노드는 사용하지 않는다.
+		//heap.add((long) 0);//이 노드는 사용하지 않는다.
 		for(int i = 0; i<n;i++) {
 
 			StringTokenizer tk = new StringTokenizer(br.readLine());
@@ -45,7 +46,10 @@ public class boj1927 {
 	}
 	
 	public static long delete() {
-		if(heap.size()==0) {
+//		if(heap.isEmpty()) {
+//			return 0;
+//		}
+		if(heap.size()==1) {
 			return 0;
 		}
 		//삭제할 노드, 루트노드
