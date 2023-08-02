@@ -45,7 +45,7 @@ public class BJO22234 {
 			
 			tx -= t;
 			
-			if(!q2.isEmpty() && q2.peek()[2] <= i) {
+			while(!q2.isEmpty() && q2.peek()[2] <= i) {
 				temp = q2.poll();
 				q1.add(new int[] {temp[0], temp[1]});
 			}
