@@ -1,13 +1,14 @@
-package algorithm;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class BOJ1927 {
+public class Main {
 	private long[] heap;
 	private int MAX = 100001;
 	private int idx;
 
-	public BOJ1927() {
+	public Main() {
 		heap = new long[MAX];
 		idx = 0;
 		;
@@ -59,13 +60,13 @@ public class BOJ1927 {
 		return remove;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		BOJ1927 heap = new BOJ1927();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		Main heap = new Main();
 		for (int i = 0; i < n; i++) {
-			long num = sc.nextLong();
+			long num = Integer.parseInt(br.readLine());
 			if (num == 0) {
 				System.out.println(heap.remove());
 			} else {
