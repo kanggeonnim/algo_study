@@ -20,6 +20,7 @@ public class BOJ3986 {
 			if (input.length % 2 == 1) {
 				continue;
 			}
+
 			// 좋은 단어 검사
 			for (int j = 0; j < input.length; j++) {
 //				 길이의 반절을 검사했을 때 스택에 단어가 남아있다면 좋은 단어가 될 수 없음.
