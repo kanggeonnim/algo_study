@@ -24,7 +24,8 @@ public class BOJ22234_가희와은행 {
 			this.time = time;
 			this.com = com;
 		}
-		public void deltime(){
+
+		public void deltime() {
 			this.time--;
 		}
 
@@ -38,9 +39,8 @@ public class BOJ22234_가희와은행 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		Queue<Cus> q = new LinkedList();
-		PriorityQueue<Cus> queue = new PriorityQueue<>((Cus a, Cus b) -> a.time > b.time ? -1 : 1);
-//		PriorityQueue<int[]> queue = new PriorityQueue<>(queue.size(), (int[] a, int[] b) -> a[2] > b[2] ? 1 : -1);
-		
+		PriorityQueue<Cus> queue = new PriorityQueue<>((Cus a, Cus b) -> a.com > b.com ? 1 : -1);
+
 		int N, T, W, M;
 
 		N = Integer.parseInt(st.nextToken());
@@ -54,12 +54,10 @@ public class BOJ22234_가희와은행 {
 			int time = Integer.parseInt(tk1.nextToken());
 			// 배열에 저장
 
-			Cus c1 = new Cus();
-			c1.id = id;
-			c1.time = time;
-			c1.com = i-N;
+			Cus c1 = new Cus(id,time,i-N);
+
 			// 큐에 추가
-			queue.add(c1);
+			q.add(c1);
 			// arraylist 추가 (고객 정보)
 		}
 		// 2번째 줄 입력 처리완료
@@ -77,7 +75,6 @@ public class BOJ22234_가희와은행 {
 			// arraylist 추가 (고객 정보)
 		}
 		// 시간 순으로 정렬
-		
 
 		// 창구
 		// T만큼을 기준으로 while 문을 돌린다.
@@ -87,42 +84,44 @@ public class BOJ22234_가희와은행 {
 		// 먼저 온 손님과 나중에 온 손님의 queue를 다르게 짜서 먼저 온 손님의 queue가 끝나면 원래 있던 손님들의 queue에 넣어서 처리
 		// part1 먼저 온 손님 처리
 		// part2 나중에 온 손님 + 먼저 온 손님 처리
-		// while문이 돌아가면 시간--; 그리고
+		// while문이 돌아가면 시간--;
 
-		for (int i = 0; i < T; i++) {// 시간을 계속 늘린다
-
-		}
 
 		Cus cus;
 		// 손님빼기
 		int time = T;
-		int w=0;
-		while (w<=W) {
-			cus = queue.peek();
-			if(cus==null) {
+		int w = 0;
+		while (w < W) {
+
+			cus = q.peek();
+			if (cus == null) {
 				break;
 			}
-			System.out.println(cus);
-			
+//			System.out.println(cus);
 			System.out.println(cus.id); // 현재 있는 손님 번호 출력
-			
-			cus.deltime(); //손님 시간 줄이기
-			time--;
-			if(cus.time<=1) {
-				queue.remove();
-				time =T;
-			}
-			
-			if(time==1&&cus.time>1) {
-				System.out.println("현재 준비한 시간이 소진되었습니다. 다시 뒤로 가서 기다리세요.");
-				System.out.println(cus);
-				queue.remove();
-				cus.com = W;
-				queue.add(cus);
-				time =T;
-			}
-			W++;
 
+			cus.deltime(); // 손님 시간 줄이기
+			time--;
+			w++;
+//			System.out.println("time: "+time+", w :"+w);
+			if(queue.isEmpty()==false&&w==queue.peek().com) {
+				
+				Cus c = queue.peek();
+//				System.out.println(c);
+				q.add(c);
+				queue.remove();
+			}
+			
+			if (time <= 0 && cus.time >= 1) {
+//				System.out.println("현재 준비한 시간이 소진되었습니다. 다시 뒤로 가서 기다리세요.");
+//				System.out.println(cus);
+				q.remove();
+				q.add(cus);
+				time = T;
+			}else if (cus.time <= 0) {
+				q.remove();
+				time = T;
+			}
 		}
 
 	}
