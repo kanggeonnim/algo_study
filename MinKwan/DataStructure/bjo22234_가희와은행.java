@@ -3,9 +3,13 @@ package algo_Study;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
+
+
 
 /*
  * 가희가 은행 업무를 시작하면 대기줄에는 손님이 N명 있다.
@@ -37,12 +41,24 @@ public class bjo22234_가희와은행 {
 		StringBuilder sb = new StringBuilder();
 
 		int n = Integer.parseInt(st.nextToken()); // 대기열의 손님 수
-		int t = Integer.parseInt(st.nextToken()); // 사용 가능 시간
+		int t = Integer.parseInt(st.nextToken()); // 손님 한 명에 사용 가능 시간
 		int w = Integer.parseInt(st.nextToken()); // 영업 종료 시간
 		int m = 0;
 		Queue<Customer> queue = new LinkedList<>();
-		Queue<Customer> newCustomerQueue = new LinkedList<>();
-		// 대기열 등록
+		PriorityQueue<Customer> pQueue = new PriorityQueue<>(new Comparator<Customer>() {
+
+			@Override
+			public int compare(Customer o1, Customer o2) {
+				if (o1.cx < o2.cx) {
+					return -1;
+				} else if (o1.cx == o2.cx) {
+					return 0;
+				} else
+					return 1;
+			}
+		});
+
+		// 대기열 손님 등록
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			Customer customer = new Customer();
@@ -52,7 +68,6 @@ public class bjo22234_가희와은행 {
 			customer.cx = 0;
 
 			queue.add(customer);
-
 		}
 
 		// 추가 고객 대기열 등록
@@ -60,6 +75,7 @@ public class bjo22234_가희와은행 {
 		m = Integer.parseInt(st.nextToken());
 
 		Customer[] customerAry = new Customer[m];
+
 		// 추가 고객 대기열 등록
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -69,137 +85,59 @@ public class bjo22234_가희와은행 {
 			customer.tx = Integer.parseInt(st.nextToken());
 			customer.cx = Integer.parseInt(st.nextToken());
 
-			customerAry[i] = customer;
+			pQueue.add(customer);
 
 		}
 
-		for (int i = 0; i < m; i++) {
-			for (int j = i + 1; j < m; j++) {
-				if (customerAry[i].cx > customerAry[j].cx) {
-					Customer temp = customerAry[i];
-					customerAry[i] = customerAry[j];
-					customerAry[j] = temp;
+		// 입력 종료
+
+		// 마감시간 for문
+		for (int i = 0; i < w;) {
+
+			Customer customer = queue.peek();
+//			System.out.println("큐 사이즈: " +queue.size());
+//			System.out.println("i " + i);
+
+			// 큐의 손님들 처리
+			for (int j = 0; j < t; i++, j++) {
+
+				if (customer.tx == 0 || i == w) {
+
+					customer = null;
+					queue.remove();
+
+					break;
 				}
-			}
-		}
 
-		for (int i = 0; i < m; i++) {
-			newCustomerQueue.add(customerAry[i]);
-		}
+				customer.tx--;
 
-		// -----------------가희 일 시작----------------------
-
-		// N: 초기 대기줄 인원 T: 가희가 한번에 쓸 수 있는 시간 W: 영업 종료 시간
-		// px: 고객 id tx:고객의 필요 시간 cx:영업 시작 시간으로부터 cx초가 지났을 떄 은행에 들어옴
-		long time = 1;
-
-		// 가희의 고객 응대 시작
-
-		while (w > 0) {
-
-			// System.out.println("W: " + w + " Time : " + time);
-			// 큐가 비어있지 않고, 가희의 체력이 남아 있는 상태라면
-
-			if (queue.isEmpty() && newCustomerQueue.isEmpty())
-				break;
-
-			Customer next = newCustomerQueue.peek();
-
-			if (!queue.isEmpty()) {
-
-				// 큐의 맨 앞 손님을 받아오기
-				Customer customer = queue.peek();
-
-				// 현재 시간이 고객의 은행 입장 시간보다 크거나 같다면
-				if (time >= customer.cx) {
-
-					// System.out.println(customer.px);
-					// 고객이 필요한 시간이 더 많으면 시간 차감하고 큐의 맨 뒤로 보내기, 고객님 다음에 오세요~
-
-					if (customer.tx > t) {
-
-						if (w < t) {
-							for (int i = 0; i < w; i++) {
-								sb.append(customer.px + "\n");
-							}
-						} else {
-							for (int i = 0; i < t; i++) {
-								sb.append(customer.px + "\n");
-							}
-						}
-
-						customer.tx -= t;
-						time += t;
-						w -= t;
-
-						if (next != null && next.cx <= time) {
-							{
-								if (!newCustomerQueue.isEmpty()) {
-									for (int i = 0; i < newCustomerQueue.size(); i++) {
-										if (newCustomerQueue.peek().cx <= time) {
-											queue.add(newCustomerQueue.poll());
-										} else
-											break;
-									}
-								}
-							}
-						}
-
-						queue.add(customer);
-						queue.remove();
-
-					} else if (customer.tx <= t) {
-
-						if (w < customer.tx) {
-							for (int i = 0; i < w; i++) {
-								sb.append(customer.px + "\n");
-							}
-						} else {
-							for (int i = 0; i < customer.tx; i++) {
-								sb.append(customer.px + "\n");
-							}
-						}
-
-						w -= customer.tx;
-						time += customer.tx;
-						customer.tx = 0;
-
-						queue.remove();
-
-						if (next != null && next.cx <= time) {
-							if (!newCustomerQueue.isEmpty()) {
-								for (int i = 0; i < newCustomerQueue.size(); i++) {
-									if (newCustomerQueue.peek().cx <= time) {
-										queue.add(newCustomerQueue.poll());
-									} else
-										break;
-								}
-							}
-						}
-
-					}
-
-				} else {
-					w = (int) (w - ( customer.cx - time));
-					time = customer.cx;
-				}
-				// 큐가 비었을때?
-			} else {
-
-				if (!newCustomerQueue.isEmpty()) {
-					for (int i = 0; i < newCustomerQueue.size(); i++) {
-
-						queue.add(newCustomerQueue.poll());
-
-					}
-				}
+				System.out.println(customer.px);
 
 			}
 
+			// 새로운 손님 받기
+			if (!pQueue.isEmpty()) {
+				for (int k = 0; k < pQueue.size(); k++) {
+					Customer newCustomer = pQueue.peek();
+					// System.out.println("새로운 손님 받기 " + newCustomer.cx + " " + i);
+
+					if (newCustomer.cx <= i) {
+						// System.out.println("새로운 고객 삽입");
+						queue.add(newCustomer);
+						// System.out.println(queue.size());
+						pQueue.remove();
+					} else
+						break;
+				}
+			}
+
+			// 손님의 작업이 남으면 큐 맨 뒤로 이동
+			if (customer != null && customer.tx > 0) {
+				queue.add(customer);
+				queue.remove();
+			}
+
 		}
-
-		System.out.println(sb);
-
 	}
 
 }

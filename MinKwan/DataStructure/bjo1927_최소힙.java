@@ -1,103 +1,113 @@
-package test01;
+package algo_Study;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-
 import java.util.List;
+import java.util.Scanner;
 
-public class bjo1927_ìµœì†Œí™ {
+public class bjo1927_ÃÖ¼ÒÈü {
 
-	static class minkwan {
+	// ÃÖ¼Ò Èü ±¸Çö
+	static class PQ {
 
-		List<Long> tree;
+		int size;
+		List<Long> list = new ArrayList<Long>();
 
-		public minkwan() {
-			tree = new ArrayList<>();
-			tree.add(0L);
+		// ÀÎµ¦½º¸¦ 1ºÎÅÍ ½ÃÀÛÈ÷±â À§ÇØ¼­
+		public PQ() {
+			list.add(0L);
+			size++;
 		}
 
-		public void Insert(Long data) {
-			data *= -1;
-			tree.add(data);
+		// pq¿¡ ³ëµå »ğÀÔ
+		public void insert(long data) {
 
-			if (tree.size() == 2) {
-				return;
-			} else {
-				int index = tree.size() - 1;
+			// ÃÖ¼ÒÈüÀÌ¾î¼­ -1À» °öÇØ¼­ ³Ö¾îÁØ´Ù.
+			list.add(data * -1);
 
-				while (true) {
-					if (tree.get(index / 2) < tree.get(index)) {
-						long temp = tree.get(index / 2);
-						tree.set(index / 2, tree.get(index));
-						tree.set(index, temp);
-						index = index / 2;
+			// ÇöÀç ¸®½ºÆ®ÀÇ ÀÎµ¦½º
+			int index = list.size() - 1;
 
-						if (index == 1)
-							break;
-					} else {
-						break;
-					}
-				}
+			while (index > 1) {
+
+				if (list.get(index) > list.get(index / 2)) {
+					long temp = list.get(index);
+					list.set(index, list.get(index / 2));
+					list.set(index / 2, temp);
+					index = index / 2;
+				} else
+					break;
 			}
+
 		}
 
-		public void Delete() {
-			// í™ì˜ ë£¨íŠ¸ ë…¸ë“œì™€ ë§ˆì§€ë§‰ ë…¸ë“œë¥¼ ë°”ê¾¼ë‹¤.
-			if (tree.size() == 1) {
+		// ·çÆ® ³ëµå µ¥ÀÌÅÍ ¹İÈ¯ ÈÄ Á¦°Å, ¸¶Áö¸· ³ëµå¸¦ ·çÆ® ³ëµå·Î °¡Á®¿Â µÚ µ¥ÀÌÅÍ Á¤·Ä
+		public void delete() {
+
+			if (list.size() == 1) {
 				System.out.println(0);
 				return;
-			}
+			} else
+				System.out.println(list.get(1) * -1);
 
-			System.out.println(tree.get(1) * -1);
-			tree.set(1, tree.get(tree.size() - 1));
-			tree.remove(tree.size() - 1);
+			list.set(1, list.get(list.size() - 1));
+			list.remove(list.size() - 1);
 
+			// ·çÆ® ³ëµå Á¦°Å ÈÄ ÃÖ½ÅÈ­ ¿Ï·á
+
+			// ÀÌÁ¦ºÎÅÍ Á¤·Ä ¼öÇà
 			int index = 1;
-			// íŠ¸ë¦¬ ì¬êµ¬ì„±
+
 			while (true) {
 
-				if ((tree.size() > index * 2) && tree.get(index) < tree.get(index * 2)) {
-					long temp = tree.get(index);
-					tree.set(index, tree.get(index * 2));
-					tree.set(index * 2, temp);
-					index *= 2;
-					continue;
-				} else if ((tree.size() > index * 2 + 1) && tree.get(index) < tree.get(index * 2 + 1)) {
-					long temp = tree.get(index);
-					tree.set(index, tree.get(index * 2 + 1));
-					tree.set(index * 2 + 1, temp);
-					index *= 2 + 1;
-					continue;
-				}
+				// Á¤·ÄÀ» ¼öÇàÇÒ ¼ö ÀÖ´Â Å©±âÀÎÁö
+				if (list.size() > index * 2) {
+					// Á¤·Ä ¼öÇà °¡´É
+					long min = list.get(index * 2);
+					int minPos = index * 2;
 
-				break;
+					//System.out.println(min);
 
+					if (list.size() > (index * 2) + 1 && list.get((index * 2) + 1) > min) {
+						min = list.get((index * 2) + 1);
+						minPos = (index * 2) + 1;
+					}
+
+					if (min > list.get(index)) {
+						long temp = list.get(index);
+						list.set(index, list.get(minPos));
+						list.set(minPos, temp);
+						index = minPos;
+					} else
+						break;
+				} else
+					break;
 			}
 		}
 
 		public void Print() {
-
-			for (long a : tree) {
+			for (long a : list) {
 				System.out.print(a + " ");
 			}
 			System.out.println();
-			System.out.println("--------------------");
 		}
+
 	}
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(sc.readLine());
-		minkwan queue = new minkwan();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+
+		PQ pq = new PQ();
+
 		for (int i = 0; i < n; i++) {
-			long val = Long.parseLong(sc.readLine());
+			int val = sc.nextInt();
 			if (val == 0) {
-				queue.Delete();
-			} else {
-				queue.Insert(val);
-			}
+				pq.delete();
+
+			} else
+				pq.insert(val);
+
+			//pq.Print();
 		}
 
 	}
