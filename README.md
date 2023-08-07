@@ -42,23 +42,31 @@
 >- 수: [S2) 1927번: 최소힙](https://www.acmicpc.net/problem/1927)
 >- 목: [G5) 22234번: 가희와 은행](https://www.acmicpc.net/problem/22234)
 >- 금: [G5) 17070번: 파이프 옮기기](https://www.acmicpc.net/problem/17070)
->- 토: [G4) 17281번: ⚾](https://www.acmicpc.net/problem/17281)
->- 일: [G4) 17406번: 배열 돌리기4](https://www.acmicpc.net/problem/17406)
 
-## 3주차: Recursion
+## 3주차: SW역량테스트 A형 대비
+>- 월: [G4) 17281번: ⚾](https://www.acmicpc.net/problem/17281)
+>- 화: [S1) 16926: 배열 돌리기1](https://www.acmicpc.net/problem/16926)
+>- 수: [G4) 17471번: 게리멘더링](https://www.acmicpc.net/problem/17471)
+>- 목: [G3) 16637번: 괄호 추가하기](https://www.acmicpc.net/problem/16637)
+>- 금: [G3) 17135번: 캐슬 디펜스](https://www.acmicpc.net/problem/17135)
 
-[//]: # (>- 월: [S4&#41; 3986번: 좋은 단어]&#40;https://www.acmicpc.net/problem/3986&#41;)
+## 4주차: Recursion
 
-[//]: # (>- 화: [S3&#41; 1270번: 전쟁 - 땅따먹기]&#40;https://www.acmicpc.net/problem/1270&#41;)
+>- 금: [G2) 17136번: 색종이 붙이기](https://www.acmicpc.net/problem/17136)
+>- 토: [G1) 3954번: rainf**k 인터프리터](https://www.acmicpc.net/problem/3954)
+>- 일: [G1) 17472번: 다리 만들기 2](https://www.acmicpc.net/problem/17472)
 
-[//]: # (>- 수: [S2&#41; 1927번: 최소힙]&#40;https://www.acmicpc.net/problem/1927&#41;)
+[comment]: <> (>- 월: [G4&#41; 17281번: ⚾]&#40;https://www.acmicpc.net/problem/17281&#41;)
 
-[//]: # (>- 목: [G5&#41; 22234번: 가희와 은행]&#40;https://www.acmicpc.net/problem/22234&#41;)
->- 금: [G4) 17471번: 게리멘더링](https://www.acmicpc.net/problem/17471)
->- 토: [G3) 16637번: 괄호 추가하기](https://www.acmicpc.net/problem/16637)
->- 일: [G3) 17135번: 캐슬 디펜스](https://www.acmicpc.net/problem/17135)
+[comment]: <> (>- 화: [G4&#41; 17406번: 배열 돌리기4]&#40;https://www.acmicpc.net/problem/17406&#41;)
 
-## 4주차: Dp
+[comment]: <> (>- 수: [G4&#41; 17471번: 게리멘더링]&#40;https://www.acmicpc.net/problem/17471&#41;)
+
+[comment]: <> (>- 목: [G3&#41; 16637번: 괄호 추가하기]&#40;https://www.acmicpc.net/problem/16637&#41;)
+
+[comment]: <> (>- 금: [G3&#41; 17135번: 캐슬 디펜스]&#40;https://www.acmicpc.net/problem/17135&#41;)
+
+## 5주차: Dp
 
 [//]: # (>- 월: []&#40;https://www.acmicpc.net/problem/3986&#41;)
 
@@ -68,9 +76,7 @@
 
 [//]: # (>- 목: [G5&#41; 22234번: 가희와 은행]&#40;https://www.acmicpc.net/problem/22234&#41;)
 
->- 금: [G2) 17136번: 색종이 붙이기](https://www.acmicpc.net/problem/17136)
->- 토: [G1) 3954번: rainf**k 인터프리터](https://www.acmicpc.net/problem/3954)
->- 일: [G1) 17472번: 다리 만들기 2](https://www.acmicpc.net/problem/17472)
+
 
 ## 5주차: Graphs(DFS/BFS)
 
