@@ -2,78 +2,92 @@ package algo_Study;
 
 import java.util.Scanner;
 
-/*
- * ÆÄÀÌÇÁÀÇ ½ÃÀÛ À§Ä¡ {{ 1,1 } { 1,2 } }
- * ¿ì,³²,³²µ¿ À¸·Î¸¸ ÀÌµ¿ °¡´É
- * ÆÄÀÌÇÁÀÇ ÇÑÂÊ ³¡À» (N,N)À¸·Î ÀÌµ¿½ÃÄÑÁà¾ß ÇÑ´Ù.
- * 
- * °¡·Î: ¿ì, ³²µ¿ 
- * ¼¼·Î: ³², ³²µ¿
- * ´ë°¢¼±: °¡·Î, ¼¼·Î, ³²µ¿
- */
-public class bjo17070_ÆÄÀÌÇÁ¿Å±â±â1 {
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
-	// ÆÄÀÌÇÁÀÇ x,y ÁÂÇ¥
-	// static int x, y;
+/*
+ * íŒŒì´í”„ì˜ ì‹œì‘ ìœ„ì¹˜ {{ 1,1 } { 1,2 } }
+ * ìš°,ë‚¨,ë‚¨ë™ ìœ¼ë¡œë§Œ ì´ë™ ê°€ëŠ¥
+ * íŒŒì´í”„ì˜ í•œìª½ ëì„ (N,N)ìœ¼ë¡œ ì´ë™ì‹œì¼œì¤˜ì•¼ í•œë‹¤.
+ * 
+ * ê°€ë¡œ: ìš°, ë‚¨ë™ 
+ * ì„¸ë¡œ: ë‚¨, ë‚¨ë™
+ * ëŒ€ê°ì„ : ê°€ë¡œ, ì„¸ë¡œ, ë‚¨ë™
+ * 
+ * 
+ */
+public class bjo17070_íŒŒì´í”„ì˜®ê¸°ê¸°1 {
+
+	// íŒŒì´í”„ì˜ x,y ì¢Œí‘œ
 	static int n;
-	static int[][] delta = { { 1, 1 }, { 0, 1 }, { 1, 1 } }; // ³²µ¿,°¡·Î,¼¼·Î
+	static int result;
+	static int[][] delta = { { 1, 1 }, { 0, 1 }, { 1, 0 } }; // ë‚¨ë™,ê°€ë¡œ,ì„¸ë¡œ
 	static int[][] map;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		n = sc.nextInt();
+		result = 0;
 		map = new int[n + 1][n + 1];
 
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= n; j++) {
 				map[i][j] = sc.nextInt();
+				//System.out.print(map[i][j] + " ");
 			}
+			//System.out.println();
 		}
 
 		// x = 1;
-		// y = 2; // ÃÊ±â ÆÄÀÌÇÁ À§Ä¡
+		// y = 2; // ì´ˆê¸° íŒŒì´í”„ ìœ„ì¹˜
 
-		for (int i = 1; i <= 3; i++) {
-			func(i, 1, 2);
-		}
+		func(1, 1, 2);
+		System.out.println(result);
 
 	}
 
 	/*
-	 * ÆÄÀÌÇÁÀÇ ¸ğµå mode 1 : °¡·Î mode 2 : ¼¼·Î mode 3 : ´ë°¢¼± -------ÀÎµ¦½º¸¦ 1ºÎÅÍ ½ÃÀÛÇÑ´Ù---- ´ë°¢¼±À¸·Î Âß
-	 * ´Ù°¡°¡ ¾ÈµÇ¸é µ¹¾Æ¿Í¼­ ´Ù½Ã ºĞ±â ½ÃÀÛ
+	 * íŒŒì´í”„ì˜ ëª¨ë“œ mode 1 : ê°€ë¡œ mode 2 : ì„¸ë¡œ mode 3 : ëŒ€ê°ì„  -------ì¸ë±ìŠ¤ë¥¼ 1ë¶€í„° ì‹œì‘í•œë‹¤---- ëŒ€ê°ì„ ìœ¼ë¡œ ì­‰
+	 * ë‹¤ê°€ê°€ ì•ˆë˜ë©´ ëŒì•„ì™€ì„œ ë‹¤ì‹œ ë¶„ê¸° ì‹œì‘
 	 */
 	static void func(int mode, int x, int y) {
 
 		if (x == n && y == n) {
-			System.out.println("¼º°ø");
+			result++;
+		//	System.out.println("ì„±ê³µ");
+			return;
 		} else {
-			System.out.println("½ÇÆĞ  " + "X: " + x + "  Y :" + y + "  Mode: " + mode);
+			//System.out.println("ì‹¤íŒ¨  " + "X: " + x + "  Y :" + y + "  Mode: " + mode);
 		}
 
 		if (mode == 1) {
+
 			for (int i = 0; i < 2; i++) {
+				//System.out.println(x + " " + y );
 				int nextX = x + delta[i][0];
 				int nextY = y + delta[i][1];
 
-				if (i == 0) {
-					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // º® ¸¸³ª¸é
-																										// return
-						return;
+				if (i == 1) {
+					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // ë²½ ë§Œë‚˜ë©´
+				//		System.out.println("Mode 1 ê°€ë¡œ  ì‹¤íŒ¨ " + " nextX: " + nextX + " nextY: " + nextY + " I: " + i); // return
+						continue;
 					}
 				} else {
 					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1
-							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY - 1] == 1) {
-						// º® ¸¸³ª¸é return
-						return;
+							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY] == 1) {
+					//	System.out.println("Mode1 ëŒ€ê°ì„  ì‹¤íŒ¨"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i);
+						continue;
 					}
 				}
 
-				x = nextX;
-				y = nextY;
-				mode = i + 1;
+				//x = nextX;
+				//y = nextY;
 
-				func(mode, x, y);
+				if (i == 0)
+					mode = 3;
+				else
+					mode = 1;
+
+				func(mode, nextX, nextY);
 
 			}
 		} else if (mode == 2) {
@@ -89,24 +103,28 @@ public class bjo17070_ÆÄÀÌÇÁ¿Å±â±â1 {
 					nextY = y + delta[i][1];
 				}
 
-				if (i == 0) {
-					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // º® ¸¸³ª¸é
-																										// return
-						return;
+				if (i == 1) {
+					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // ë²½ ë§Œë‚˜ë©´
+						//System.out.println("Mode 2 ì„¸ë¡œ ì‹¤íŒ¨"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i); // return
+						continue;
 					}
 				} else {
 					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1
-							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY - 1] == 1) {
-						// º® ¸¸³ª¸é return
-						return;
+							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY] == 1) {
+						//System.out.println("Mode 2 ëŒ€ê°ì„  ì‹¤íŒ¨"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i);
+						continue;
 					}
 				}
 
-				x = nextX;
-				y = nextY;
-				mode = i + 1;
+//				x = nextX;
+//				y = nextY;
 
-				func(mode, x, y);
+				if (i == 0)
+					mode = 3;
+				else
+					mode = 2;
+
+				func(mode, nextX, nextY);
 			}
 		} else {
 
@@ -114,25 +132,35 @@ public class bjo17070_ÆÄÀÌÇÁ¿Å±â±â1 {
 				int nextX = x + delta[i][0];
 				int nextY = y + delta[i][1];
 
-				if (i == 0 || i == 1) {
-					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // º® ¸¸³ª¸é
-																										// return
-						return;
+				if (i == 1) {
+					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // ë²½ ë§Œë‚˜ë©´
+						//System.out.println("Mode3 ê°€ë¡œ"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i);
+						continue;
 					}
-				} else {
+				} else if(i==2){
+					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1) { // ë²½ ë§Œë‚˜ë©´
+						//System.out.println("Mode3 ì„¸ë¡œ"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i);
+						continue;
+					}
+				}else {
 					if (nextX < 1 || nextX > n || nextY < 1 || nextY > n || map[nextX][nextY] == 1
-							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY - 1] == 1) {
-						// º® ¸¸³ª¸é return
-						return;
+							|| map[nextX][nextY - 1] == 1 || map[nextX - 1][nextY] == 1)  {
+						//System.out.println("Mode3 ëŒ€ê°ì„  ì‹¤íŒ¨"  + " nextX: " + nextX + " nextY: " + nextY+ " I: " + i);
+						continue;
 					}
 				}
 
-				x = nextX;
-				y = nextY;
+//				x = nextX;
+//				y = nextY;
 
-				mode = i + 1;
+				if (i == 0)
+					mode = 3;
+				else if (i == 1)
+					mode = 1;
+				else
+					mode = 2;
 
-				func(mode, x, y);
+				func(mode, nextX, nextY);
 			}
 		}
 	}
