@@ -52,6 +52,7 @@ public class BOJ17281 {
 		}
 
 		for (int i = 0; i < 9; i++) {
+			if(i==0)continue;
 			if (isused[i] == false) {
 				isused[i] = true;
 				board[cnt] = i;
