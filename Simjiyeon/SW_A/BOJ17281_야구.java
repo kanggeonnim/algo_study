@@ -32,7 +32,7 @@ public class BOJ17281 {
 		board[3] = 0;
 		isused[0] = true;
 		max = 0;
-//		print(board);
+
 		perm(board, 0);
 		System.out.println(max);
 
@@ -64,7 +64,7 @@ public class BOJ17281 {
 
 	static int play(int[] board) {
 		int score = 0;
-		int out = 0; // out 횟수
+		
 		Queue<Integer> q = new LinkedList<Integer>();
 		int[] ground = new int[5];// 경지장 타석 0: 홈 , 1: 3루, 2:2루, 3:1루
 
@@ -73,32 +73,37 @@ public class BOJ17281 {
 		}
 		for (int i = 0; i < N; i++) {// 이닝 횟수 돌리기
 			
+			for (int k = 0; k < 4; k++) {//ground 초기화
+				ground[k] = 0;
+			}
+			int out = 0; // out 횟수
+
 			while (true) {// 이닝이 끝날때까지 돌리기
 				int now = q.poll(); // 현재 선수 큐에서 뽑기
 				q.add(now);// 다시 맨 뒤에 큐를 넣는다.
-				
-				System.out.println(now+"선수의 "+i+"이닝 점수: "+arr[i][now]);
-				if (arr[i][now] ==0) {// 만약 파울이 아니면? 1루에 사람 추가 +1
+
+//				System.out.println(now + "선수의 " + i + "이닝 점수: " + arr[i][now]);
+				if (arr[i][now] == 0) {// 만약 파울이 아니면? 1루에 사람 추가 +1
 					out++; // 만약 파울이라면 out횟수 추가
-				}else {
+				} else {
 					ground[4] = 1;
 				}
-				
-				for (int k = 0; k < arr[i][now]; k++) { //경기 진행
+
+				for (int k = 0; k < arr[i][now]; k++) { // 경기 진행
 					for (int dir = 1; dir <= 4; dir++) {
 						ground[dir - 1] += ground[dir];
 						ground[dir] = 0;
 					}
 				}
-				
-				if (out == 3) {
+
+				if (out >= 3) {
 					break;
 				}
 
 			}
-			System.out.println("##########################");
-			print(board);
-			System.out.println(i+"번째 이닝 점수: "+ground[0]);
+//			System.out.println("##########################");
+//			print(board);
+//			System.out.println(i + "번째 이닝 점수: " + ground[0]);
 			// 홈에 들어온 사람명 수 만큼이 점수니깐 더하기
 			score += ground[0];
 
