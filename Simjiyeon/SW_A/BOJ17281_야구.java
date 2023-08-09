@@ -52,7 +52,8 @@ public class BOJ17281 {
 		}
 
 		for (int i = 0; i < 9; i++) {
-			if(i==0)continue;
+			if (i == 0)
+				continue;
 			if (isused[i] == false) {
 				isused[i] = true;
 				board[cnt] = i;
@@ -65,16 +66,16 @@ public class BOJ17281 {
 
 	static int play(int[] board) {
 		int score = 0;
-		
+
 		Queue<Integer> q = new LinkedList<Integer>();
-		int[] ground = new int[5];// 경지장 타석 0: 홈 , 1: 3루, 2:2루, 3:1루
+		int[] ground = new int[3];// 경지장 타석 0: 1루 , 1: 2루, 2:3루
 
 		for (int i = 0; i < 9; i++) { // q에 사람 넣기
 			q.add(board[i]);
 		}
 		for (int i = 0; i < N; i++) {// 이닝 횟수 돌리기
-			
-			for (int k = 0; k < 4; k++) {//ground 초기화
+
+			for (int k = 0; k < 3; k++) {// ground 초기화
 				ground[k] = 0;
 			}
 			int out = 0; // out 횟수
@@ -83,30 +84,56 @@ public class BOJ17281 {
 				int now = q.poll(); // 현재 선수 큐에서 뽑기
 				q.add(now);// 다시 맨 뒤에 큐를 넣는다.
 
-//				System.out.println(now + "선수의 " + i + "이닝 점수: " + arr[i][now]);
-				if (arr[i][now] == 0) {// 만약 파울이 아니면? 1루에 사람 추가 +1
-					out++; // 만약 파울이라면 out횟수 추가
-				} else {
-					ground[4] = 1;
-				}
+//				if (arr[i][now] == 0) {// 만약 파울이 아니면? 1루에 사람 추가 +1
+//					out++; // 만약 파울이라면 out횟수 추가
+//				}
 
-				for (int k = 0; k < arr[i][now]; k++) { // 경기 진행
-					for (int dir = 1; dir <= 4; dir++) {
-						ground[dir - 1] += ground[dir];
-						ground[dir] = 0;
-					}
-				}
+				switch (arr[i][now]) {
+				case 1:
+					score += ground[0];
+					ground[0] = ground[1];
+					ground[1] = ground[2];
+					ground[2] = 1;
+					break;
+				case 2:
+					score += ground[0] + ground[1];
+					ground[0] = ground[2];
+					ground[1] = 1;
+					ground[2] = 0;
+					break;
+				case 3:
+					score += ground[0] + ground[1] + ground[2];
+					ground[0] = 1;
+					ground[1] = 0;
+					ground[2] = 0;
+					break;
 
-				if (out >= 3) {
+				case 4:
+					score += ground[0] + ground[1] + ground[2] + 1;
+					ground[0] = 0;
+					ground[1] = 0;
+					ground[2] = 0;
+					break;
+
+				default:
+					out++;
+					break;
+				}
+//코드는 짧아지지만 시간 복잡도 고려하지 않음.
+//for문으로 시간이 더 오래걸림
+//				for (int k = 0; k < arr[i][now]; k++) { // 경기 진행
+//					for (int dir = 1; dir <= 4; dir++) {
+//						ground[dir - 1] += ground[dir];
+//						ground[dir] = 0;
+//					}
+//				}
+
+				if (out == 3) {
 					break;
 				}
 
 			}
-//			System.out.println("##########################");
-//			print(board);
-//			System.out.println(i + "번째 이닝 점수: " + ground[0]);
 			// 홈에 들어온 사람명 수 만큼이 점수니깐 더하기
-			score += ground[0];
 
 		}
 
