@@ -45,16 +45,25 @@
 
 ## 3주차: SW역량테스트 A형 대비
 >- 월: [G4) 17281번: ⚾](https://www.acmicpc.net/problem/17281)
->- 화: [S1) 16926: 배열 돌리기1](https://www.acmicpc.net/problem/16926)
->- 수: [G4) 17471번: 게리멘더링](https://www.acmicpc.net/problem/17471)
->- 목: [G3) 16637번: 괄호 추가하기](https://www.acmicpc.net/problem/16637)
->- 금: [G3) 17135번: 캐슬 디펜스](https://www.acmicpc.net/problem/17135)
+>- 수: [S1) 16926: 배열 돌리기1](https://www.acmicpc.net/problem/16926)
+>- 금: [G4) 17471번: 게리멘더링](https://www.acmicpc.net/problem/17471)
 
-## 4주차: Recursion
 
+## 4주차: SW역량테스트 A형 대비
+>- 월: [G3) 16637번: 괄호 추가하기](https://www.acmicpc.net/problem/16637)
+>- 수: [G3) 17135번: 캐슬 디펜스](https://www.acmicpc.net/problem/17135)
 >- 금: [G2) 17136번: 색종이 붙이기](https://www.acmicpc.net/problem/17136)
->- 토: [G1) 3954번: rainf**k 인터프리터](https://www.acmicpc.net/problem/3954)
->- 일: [G1) 17472번: 다리 만들기 2](https://www.acmicpc.net/problem/17472)
+
+## 5주차: SW역량테스트 A형 대비
+>- 월: [G1) 3954번: rainf**k 인터프리터](https://www.acmicpc.net/problem/3954)
+>- 수: [G1) 17472번: 다리 만들기 2](https://www.acmicpc.net/problem/17472)
+
+
+
+[comment]: <> (## 4주차: Recursion)
+
+
+
 
 [comment]: <> (>- 월: [G4&#41; 17281번: ⚾]&#40;https://www.acmicpc.net/problem/17281&#41;)
 
@@ -66,7 +75,7 @@
 
 [comment]: <> (>- 금: [G3&#41; 17135번: 캐슬 디펜스]&#40;https://www.acmicpc.net/problem/17135&#41;)
 
-## 5주차: Dp
+[comment]: <> (## 5주차: Dp)
 
 [//]: # (>- 월: []&#40;https://www.acmicpc.net/problem/3986&#41;)
 
@@ -78,7 +87,7 @@
 
 
 
-## 5주차: Graphs(DFS/BFS)
+[comment]: <> (## 5주차: Graphs&#40;DFS/BFS&#41;)
 
 [//]: # (>- 월: [S4&#41; 3986번: 좋은 단어]&#40;https://www.acmicpc.net/problem/3986&#41;)
 
