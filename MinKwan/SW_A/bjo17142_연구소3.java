@@ -1,6 +1,7 @@
 package algo_Study;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -19,6 +20,8 @@ public class bjo17142_연구소3 {
 	static int oriGoal;
 	static int goal;
 	static int time;
+	static int result;
+	static ArrayList<Integer> resultList;
 	static int[] dx = { 0, 0, 1, -1 };
 	static int[] dy = { 1, -1, 0, 0, };
 
@@ -30,7 +33,8 @@ public class bjo17142_연구소3 {
 		arr = new int[N][N];
 		virus = new ArrayList<Point>();
 		virusComb = new Point[M];
-
+		result = -1;
+		resultList = new ArrayList<Integer>();
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				arr[i][j] = sc.nextInt();
@@ -47,10 +51,23 @@ public class bjo17142_연구소3 {
 		oriGoal = goal;
 
 		virusSize = virus.size();
-		System.out.println(virus.size());
-		System.out.println(oriGoal);
+//		System.out.println(virus.size());
+//		System.out.println(oriGoal);
 
 		Combination(0, 0);
+
+		Collections.sort(resultList);
+		for (int i = 0; i < resultList.size(); i++) {
+
+			if (result == -1 && resultList.get(i) > 0) {
+				result = resultList.get(i);
+			} else if (result > resultList.get(i)) {
+				result = resultList.get(i);
+			}
+
+		}
+		
+		System.out.println(result);
 
 	}
 
@@ -58,15 +75,18 @@ public class bjo17142_연구소3 {
 	static void Combination(int start, int cnt) {
 		if (cnt == M) {
 
-			for (Point a : virusComb) {
-				System.out.print(a.x + " " + a.y + ", ");
-			}
-			System.out.println();
+//			for (Point a : virusComb) {
+//				System.out.print(a.x + " " + a.y + ", ");
+//			}
+//			System.out.println();
 
 			goal = oriGoal;
 			visit = new boolean[N][N];
 			time = 0;
-			BFS();
+
+			int ans_BFS = BFS();
+			resultList.add(ans_BFS);
+
 			return;
 
 		}
@@ -89,10 +109,10 @@ public class bjo17142_연구소3 {
 		}
 	}
 
-	static void BFS() {
+	static int BFS() {
 		Queue<Point> q;
 		q = new LinkedList<Point>();
-
+		int answer = -1;
 		for (int i = 0; i < virusComb.length; i++) {
 			q.add(virusComb[i]);
 			visit[virusComb[i].x][virusComb[i].y] = true;
@@ -105,6 +125,7 @@ public class bjo17142_연구소3 {
 
 			q.poll();
 			time++;
+			goal--;
 			for (int i = 0; i < 4; i++) {
 				int nextX = x + dx[i];
 				int nextY = y + dy[i];
@@ -116,16 +137,20 @@ public class bjo17142_연구소3 {
 
 					if (arr[nextX][nextY] == 0)
 						arr[nextX][nextY] = 2;
-					
-					goal--;
-					
+
 					q.add(new Point(nextX, nextY, d + 1));
 				}
 			}
 
-			if (goal <= 0)
-				System.out.println("바이러스 번식 성공! " + d);
+			if (goal <= 0) {
+//				System.out.println("바이러스 번식 성공! " + d);
+				answer = d;
+				break;
+
+			}
 		}
+
+		return answer;
 
 	}
 
