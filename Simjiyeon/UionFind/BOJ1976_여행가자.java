@@ -1,3 +1,5 @@
+package day0822;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,7 +38,7 @@ public class BOJ1976_여행가자 {
 	private static boolean Search(int a, int b) {
 		Find(a);
 		Find(b);
-		System.out.println(parents[a] + " =? " + parents[b]);
+//		System.out.println(parents[a] + " =? " + parents[b]);
 		if (parents[a] == parents[b]) {
 			return true;
 		}
@@ -53,22 +55,23 @@ public class BOJ1976_여행가자 {
 		M = Integer.parseInt(st.nextToken());
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
-			for (int j = i; j < N; j++) {
+			for (int j = 0; j < N; j++) {
 				int map = Integer.parseInt(st.nextToken());
 				if (map == 1) {
-					Union(i, j);
+					Union(i + 1, j + 1);
+//					System.out.println();
 				}
 			}
 		}
-		int[] arr = new int[N];
+		int[] arr = new int[M];
 
 		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(st.nextToken())-1;
+		for (int i = 0; i < M; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
 		}
 
-		for (int i = 1; i < N; i++) {
-			System.out.println(arr[i - 1] + ", " + arr[i] + ": 비교해보자");
+		for (int i = 1; i < M; i++) {
+//			System.out.println(arr[i - 1] + ", " + arr[i] + ": 비교해보자");
 			if (!Search(arr[i - 1], arr[i])) {
 				System.out.println("NO");
 				return;
