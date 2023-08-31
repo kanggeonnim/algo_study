@@ -1,147 +1,178 @@
-package week4;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class BOJ17142_연구소3 {
-	static int N, M;
+public class Main {
+	static int N, M; // 배열 크기, 놓을 수 있는 바이러스의 개수
+	static ArrayList<pos> positions;
+	static boolean[] visit;
+	static int[][] input;
+	static pos[] put;
 	static int[] arr;
-	static boolean[] selected;
-	static int[][] input, map;
-	static boolean[][] visited;
-	static ArrayList<Virus> first_v;
-	static int[] dx = { 0, 1, 0, -1 };
-	static int[] dy = { 1, 0, -1, 0 };
 	static int Min = Integer.MAX_VALUE;
+//	static int time = Integer.MAX_VALUE;
 
-	static class Virus {
+	static class pos {
 		int x;
 		int y;
 		int time;
 
-		public Virus(int x, int y, int time) {
-			super();
+		@Override
+		public String toString() {
+			return "pos [x=" + x + ", y=" + y + ", time=" + time + "]";
+		}
+
+		public pos(int x, int y, int time) {
 			this.x = x;
 			this.y = y;
 			this.time = time;
 		}
 
-	}
+	}// pos
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
+
 		input = new int[N][N];
-
-		// 활성 바이러스 조합 만들 때 쓰이는 배열
-		arr = new int[M];
-		first_v = new ArrayList<>();
-
+		positions = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < N; j++) {
-				int a = Integer.parseInt(st.nextToken());
-				input[i][j] = a;
+				input[i][j] = Integer.parseInt(st.nextToken());
 				if (input[i][j] == 2) {
-					// 처음 바이러스 위치 기억
-					first_v.add(new Virus(i, j, 0));
+					positions.add(new pos(i, j, 0));
+//					input[i][j] = 0;
 				}
 			}
-		} // input end
+		} // input-end
 
-		selected = new boolean[first_v.size()];
-		// 처음 바이러스 위치 결정 함수
-		// 처음 바이러스 위치 결정 후 그 위치에서 bfs돌리기
-		recur(0, 0);
-		// 최소시간 구해서 가져오기
+		// 바이러스를 처음에 둘 장소들을 결정하는 조합
+		visit = new boolean[positions.size()];
+		put = new pos[M];
+		arr = new int[M];
+		comb(0, 0);
 
-		// 전체 바이러스가 활성화 되었는지 체크 후 정답 출력
 		if (Min == Integer.MAX_VALUE) {
 			System.out.println("-1");
 		} else {
 			System.out.println(Min);
 		}
+
 	}// main
 
-	static void recur(int cnt, int start) { // m개를 뽑아서 arr에 넣고 그 뽑은 m개를 기준으로 q돌리기
+	private static void comb(int cnt, int start) {
 		if (cnt == M) {
-			Queue<Virus> queue = new ArrayDeque<>();
-			map = new int[N][N];
-			visited = new boolean[N][N];
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					if (input[i][j] == 1) {// 벽 체크 후 벽이면 2대입
-						map[i][j] = 2;
-						visited[i][j] = true;
-					}
-				}
+//			System.out.println(Arrays.toString(put));
+//			System.out.println(Arrays.toString(arr));
+			// 만들어진 조합에서 bfs를 돌려서 시간 측정
+			int[][] map = arraycopy(input);
+//			print(map);
+			int time = bfs(put, map);
+			if (time != -1) {
+//				System.out.println("-1 아니었다@!~~: " + time);
+				Min = Math.min(Min, time);
 			}
-			for (int i = 0; i < M; i++) {
-				System.out.println("좌표: " + first_v.get(arr[i]).x + ", " + first_v.get(arr[i]).y);
-				queue.add(first_v.get(arr[i]));
-			}
-			bfs(queue);
+			bfs(put, map);
 			return;
-			// 바이러스 퍼트리기
-
 		}
 
-		for (int i = start; i < first_v.size(); i++) {
-			if (!selected[i]) {
+		for (int i = start; i < positions.size(); i++) {
+			if (!visit[i]) {
+				pos p = positions.get(i);
+				put[cnt] = p;
 				arr[cnt] = i;
-				selected[i] = true;
-				recur(cnt + 1, i + 1);
-				selected[i] = false;
+				visit[i] = true;
+				comb(cnt + 1, i + 1);
+				visit[i] = false;
 			}
 		}
 
-	}// recur
+	}// comb
 
-	static void bfs(Queue<Virus> q) {
-		int times = 0;
-		while (!q.isEmpty()) {
-			Virus v = q.poll();
-			// 활성화된 바이러스는 1로
-			map[v.x][v.y] = 1;
-			visited[v.x][v.y] = true;
-
-			for (int dir = 0; dir < 4; dir++) {// 4방 탐색
-				int nx = v.x + dx[dir];
-				int ny = v.y + dy[dir];
-				if (nx >= 0 && ny >= 0 && nx < N && ny < N && map[nx][ny] != 2 && map[nx][ny] != 1
-						&& !visited[nx][ny]) {
-					visited[nx][ny] = true;
-					map[nx][ny] = 1;
-					q.add(new Virus(nx, ny, v.time + 1));
-				}
+	private static int[][] arraycopy(int[][] input) {
+		int[][] map = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				map[i][j] = input[i][j];
 			}
-			times = v.time;
 		}
-		System.out.println(times);
-		if (check(map)) {
-			Min = Math.min(Min, times);
-		}
-	}// bfs
+		return map;
+	}
 
-	static boolean check(int[][] map) {
+	static boolean[][] v;
+	static int[] dx = { 0, 1, 0, -1 };
+	static int[] dy = { 1, 0, -1, 0 };
+
+	private static int bfs(pos[] put2, int[][] map) {
+		Queue<pos> q = new ArrayDeque<>();
+		v = new boolean[N][N];
+		int EmptySpace = 0;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				if (map[i][j] == 0) {
-					return false;
+					EmptySpace++;
 				}
 			}
 		}
-		return true;
 
+		for (int i = 0; i < put2.length; i++) {
+			pos p = put2[i];
+			q.add(p);
+			v[p.x][p.y] = true;
+		}
+		int time = 0;
+
+		while (!q.isEmpty()) {
+			pos p = q.poll();
+
+			for (int dir = 0; dir < 4; dir++) {
+				int nx = p.x + dx[dir];
+				int ny = p.y + dy[dir];
+				if (nx >= 0 && ny >= 0 && nx < N && ny < N && map[nx][ny] != 1 && !v[nx][ny]) {
+					if (map[nx][ny] == 0) {
+						EmptySpace--;
+						time = Math.max(time, p.time + 1);
+					}
+
+					v[nx][ny] = true;
+					q.add(new pos(nx, ny, p.time + 1));
+				}
+			} // dir
+		} // while
+		if (EmptySpace == 0) {
+			return time;
+		} else {
+			return -1;
+		}
+	}// bfs
+
+	static void print(int[][] map) {
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				System.out.print(map[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}// print
+
+	private static boolean mapcheck(int[][] map) {
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if (map[i][j] == 0)
+					return false;
+			}
+		}
+		return true;
 	}
 
 }
