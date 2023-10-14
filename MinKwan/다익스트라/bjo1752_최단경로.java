@@ -1,11 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 public class bjo1752_최단경로 {
 
@@ -13,16 +12,20 @@ public class bjo1752_최단경로 {
 	static int E;
 	static int[] dis;
 	static boolean[] visit;
+	static StringBuilder sb = new StringBuilder();
 
-	static class Node {
-		int from;
+	static class Edge implements Comparable<Edge> {
 		int to;
 		int cost;
 
-		public Node(int from, int to, int cost) {
-			this.from = from;
+		public Edge(int to, int cost) {
 			this.to = to;
 			this.cost = cost;
+		}
+
+		@Override
+		public int compareTo(Edge o) {
+			return this.cost - o.cost;
 		}
 	}
 
@@ -34,7 +37,9 @@ public class bjo1752_최단경로 {
 		E = Integer.parseInt(st.nextToken());
 		int start = Integer.parseInt(br.readLine());
 
-		Node[] nodes = new Node[E];
+		ArrayList<Edge>[] edges = new ArrayList[V + 1];
+		for (int i = 0; i < V + 1; i++)
+			edges[i] = new ArrayList<>();
 		dis = new int[V + 1];
 		visit = new boolean[V + 1];
 
@@ -47,38 +52,37 @@ public class bjo1752_최단경로 {
 			int to = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
 
-			nodes[i] = new Node(from, to, cost);
+			edges[from].add(new Edge(to, cost));
 		}
 
-		PriorityQueue<Integer> pq = new PriorityQueue<>();
-		pq.add(start);
+		PriorityQueue<Edge> pq = new PriorityQueue<>();
+		pq.add(new Edge(start, 0));
 
 		while (!pq.isEmpty()) {
-			int nowVertex = pq.poll();
-			visit[nowVertex] = true;
+			Edge now = pq.poll();
+			int to = now.to;
 
-			for (int i = 0; i < nodes.length; i++) {
-				if (nodes[i].from == nowVertex) {
-					Node node = nodes[i];
-					int from = node.from;
-					int to = node.to;
-					int cost = node.cost;
+			if (visit[to])
+				continue;
 
-					dis[to] = Math.min(dis[to], dis[from] + cost);
-					//System.out.println(Arrays.toString(dis));
-					if (!visit[to])
-						pq.add(to);
+			visit[to] = true;
+
+			for (Edge next : edges[to]) {
+				if (dis[next.to] > now.cost + next.cost) {
+					dis[next.to] = now.cost + next.cost;
+					pq.add(new Edge(next.to, now.cost + next.cost));
 				}
-
 			}
 		}
 
 		for (int i = 1; i <= V; i++) {
 			if (dis[i] == Integer.MAX_VALUE)
-				System.out.println("INF");
+				sb.append("INF\n");
 			else
-				System.out.println(dis[i]);
+				sb.append(dis[i]).append("\n");
 		}
+
+		System.out.println(sb);
 	}
 
 }
