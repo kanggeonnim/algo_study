@@ -10,6 +10,7 @@ public class swea2805_농작물수확하기 {
 	static boolean[][] visit;
 	static int[][] map;
 	static int ans;
+	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,28 +27,63 @@ public class swea2805_농작물수확하기 {
 				String str = br.readLine();
 				for (int j = 0; j < N; j++) {
 					map[i][j] = str.charAt(j) - '0';
-				}
-			}
 
-			for (int i = 0; i < N; i++) {
-
-				for (int j = 0; j < N; j++) { // 수확 시작
-					harvest();
 				}
 
 			}
 
+			harvest(half, half);
+			sb.append("#").append(t).append(" ").append(ans).append("\n");
 		}
+		System.out.println(sb);
 	}
 
 	static void harvest(int x, int y) {
 
-		for (int i = half; i > 0; i--) {
+		int sum = 0;
 
-			for (int j = i; j > 0; j--) {
+		// 남쪽부터 시작
+		for (int i = half; i >= 0; i--) {
 
+			for (int j = 0; j <= i; j++) {
+				int nx = x + i - j;
+				int ny_left = y - j;
+				int ny_right = y + j;
+
+				if (nx < N && ny_left >= 0 && !visit[nx][ny_left]) {
+					sum += map[nx][ny_left];
+					visit[nx][ny_left] = true;
+				}
+
+				if (nx < N && ny_right < N && !visit[nx][ny_right]) {
+					sum += map[nx][ny_right];
+					visit[nx][ny_right] = true;
+				}
 			}
 		}
+
+		// 북쪽 탐색 시작
+		for (int i = half; i >= 0; i--) {
+
+			for (int j = 0; j <= i; j++) {
+				int nx = x - i + j;
+				int ny_left = y - j;
+				int ny_right = y + j;
+
+				if (nx >= 0 && ny_left >= 0 && !visit[nx][ny_left]) {
+					sum += map[nx][ny_left];
+					visit[nx][ny_left] = true;
+				}
+
+				if (nx >= 0 && ny_right < N && !visit[nx][ny_right]) {
+					sum += map[nx][ny_right];
+					visit[nx][ny_right] = true;
+				}
+			}
+		}
+
+		ans = Math.max(ans, sum);
+
 	}
 
 }
