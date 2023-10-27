@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main {
+	static class Profile implements Comparable<Profile> {
+		int age;
+		String name;
+
+		public Profile(int age, String name) {
+			this.age = age;
+			this.name = name;
+		}
+
+		@Override
+		public int compareTo(Profile o) {
+			return Integer.compare(this.age, o.age);
+		}
+
+		@Override
+		public String toString() {
+			return age + " " + name;
+		}
+	}
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		
+		
+		//PriorityQueue<Profile> pq = new PriorityQueue<Profile>();
+		ArrayList<Profile > list = new ArrayList<Profile>();
+		for (int i = 0; i < n; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int age = Integer.parseInt(st.nextToken());
+			String name = st.nextToken();
+
+			list.add(new Profile(age, name));
+		}
+		
+		Collections.sort(list);
+		for(Profile p : list)
+			System.out.println(p);
+//		while (!pq.isEmpty()) {
+//			System.out.println(pq.poll().toString());
+//		}
+	}
+}
