@@ -3,154 +3,149 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class swea5656_벽돌깨기 {
-	static int T; // 테케수
-	static int N; // 구슬의 수
-	static int W; // 열
-	static int H; // 행
-	static int[][] map; // map
-	static int[][] copy; // 맵을 초기화할때 사용할 copy 배열
-
-	static int numbers[];
-	static int min;
+	static int N;
+	static int W;
+	static int H;
+	static int maxH;
+	static int[][] map;
+	static LinkedList<Integer> temp[];
+	static int[] selected;
+	static int ans;
+	static StringBuilder sb = new StringBuilder();
 
 	static int[] dx = { -1, 1, 0, 0 };
 	static int[] dy = { 0, 0, -1, 1 };
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		T = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(br.readLine());
 
 		for (int t = 1; t <= T; t++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
 
+			StringTokenizer st = new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			W = Integer.parseInt(st.nextToken());
 			H = Integer.parseInt(st.nextToken());
-
+			ans = Integer.MAX_VALUE;
+			maxH = 0;
+			selected = new int[N];
 			map = new int[H][W];
-			copy = new int[H][W];
-			numbers = new int[N];
-			min = Integer.MAX_VALUE;
-
-			for (int h = 0; h < H; h++) {
+			for (int i = 0; i < H; i++) {
 				st = new StringTokenizer(br.readLine());
-				for (int w = 0; w < W; w++) {
-					map[h][w] = copy[h][w] = Integer.parseInt(st.nextToken());
+				for (int j = 0; j < W; j++) {
+					map[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
 
-			perm(0);
-			System.out.println("#" + t + " " + min);
-		}
+			// 입력 종료
+
+//			for(int i = 0; i<W;i++) {
+//				for(int j = 0; j<list[i].size();j++) {
+//					System.out.print(list[i].get(j) + " ");
+//				}
+//				System.out.println();
+//			}
+			permutation(0);
+			if(ans == Integer.MAX_VALUE)
+				sb.append("#").append(t).append(" ").append(0).append("\n");
+			else
+				sb.append("#").append(t).append(" ").append(ans).append("\n");
+		} // 테스트케이스 for문
+
+		System.out.println(sb);
 	}
 
-	static void perm(int cnt) {
+	// 중복 순열
+	static void permutation(int cnt) {
 		if (cnt == N) {
 
-			start(numbers);
-			min = Math.min(min, countMap());
-			mapcopy(); //맵 초기화
+			// Temp 초기화
+			deepCopy();
+			for (int i = 0; i < N; i++) {
+				// 선택한 인덱스가 최고 높이에 있는지부터 판별한다.
+				// System.out.println("selected " + selected[i]);
+				int pos = selected[i];
+				if (temp[pos].isEmpty())
+					return;
+				explode(pos, temp[pos].size() - 1, temp[pos].getLast());
+				sort();
+			}
+			// System.out.println();
+			int rest = getRest();
+			//System.out.println(rest);
+			ans = Integer.min(rest, ans);
 			return;
 		}
 
 		for (int i = 0; i < W; i++) {
-			numbers[cnt] = i;
-			perm(cnt + 1);
+			selected[cnt] = i;
+			permutation(cnt + 1);
 		}
 	}
 
-	static void start(int[] arr) {
-		int x = 0;
-		int y = 0;
+	// 발해서 맞춘 곳 폭파
+	static void explode(int w, int h, int power) {
+		temp[w].set(h, 0);
+		for (int i = 0; i < 4; i++) {
+			int nx = w;
+			int ny = h;
+			for (int j = 1; j < power; j++) {
+				nx += dx[i];
+				ny += dy[i];
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < H; j++) {
-				if (map[j][arr[i]] != 0) {
-
-					x = j;
-					y = arr[i];
-					break;
-				}
-			}
-
-			bfs(x, y);
-			blockdown();
-
-		}
-	}
-
-	static void bfs(int x, int y) {
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] { x, y, map[x][y] });
-		map[x][y] = 0;
-
-		while (!q.isEmpty()) {
-			int[] cur = q.poll();
-			int power = cur[2];
-
-			for (int i = 1; i < power; i++) {
-				for (int j = 0; j < 4; j++) {
-					int nx = cur[0] + dx[j] * i;
-					int ny = cur[1] + dy[j] * i;
-
-					if (nx < 0 || nx >= H || ny < 0 || ny >= W || map[nx][ny] == 0)
-						continue;
-
-					if (map[nx][ny] != 0) { // 0이 아니라면 블록이니까
-						q.add(new int[] { nx, ny, map[nx][ny] });
-						map[nx][ny] = 0; // 폭팔 처리로 0으로 바꿈
-					}
+				if (nx >= 0 && nx < W && ny >= 0 && ny < temp[nx].size()) {
+					explode(nx, ny, temp[nx].get(ny));
 				}
 			}
 		}
 	}
 
-	static void blockdown() {
-		Stack<Integer> s = new Stack<>();
-
+	// 숫자 0 인벽돌 파괴
+	static void sort() {
 		for (int i = 0; i < W; i++) {
-			for (int j = 0; j < H; j++) {
-				if (map[j][i] != 0)
-					s.add(map[j][i]);
-			}
-
-			for (int j = H - 1; j >= 0; j--) {
-				if (s.isEmpty())
-					map[j][i] = 0;
-				else
-					map[j][i] = s.pop();
+			for (int j = temp[i].size() - 1; j >= 0; j--) {
+				if (temp[i].get(j) == 0)
+					temp[i].remove(j);
 			}
 		}
 	}
 
-	static void mapcopy() {
-		for (int h = 0; h < H; h++) {
-
-			for (int w = 0; w < W; w++) {
-				map[h][w] = copy[h][w];
-			}
+	// 최대 높이 판별
+	static void getMaxHeight() {
+		int max = 0;
+		for (int i = 0; i < W; i++) {
+			max = Integer.max(max, temp[i].size());
 		}
-
+		maxH = max;
 	}
 
-	static int countMap() {
-		int count = 0;
-		for (int h = 0; h < H; h++) {
-
-			for (int w = 0; w < W; w++) {
-				if (map[h][w] != 0)
-					count++;
+	static int getRest() {
+		int sum = 0;
+		for (int i = 0; i < W; i++) {
+			for (int j = 0; j < temp[i].size(); j++) {
+				sum++;
 			}
 		}
-
-		return count;
+		return sum;
 	}
+
+	// 깊은 복사 수행
+	static void deepCopy() {
+
+		temp = new LinkedList[W];
+		for (int i = 0; i < W; i++)
+			temp[i] = new LinkedList<>();
+
+		for (int i = H - 1; i >= 0; i--) {
+			for (int j = 0; j < W; j++) {
+				if (map[i][j] != 0)
+					temp[j].add(map[i][j]);
+			}
+		}
+	}
+
 }
